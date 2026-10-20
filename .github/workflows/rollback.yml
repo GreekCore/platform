@@ -43,7 +43,7 @@ jobs:
         run: '[[ "$PLATFORM_REF" =~ ^[0-9a-f]{40}$ ]]'
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          repository: paris-phan/platform
+          repository: GreekCore/platform
           ref: ${{ inputs.platform-ref }}
           path: _platform
           persist-credentials: false

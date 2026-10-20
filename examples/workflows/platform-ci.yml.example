@@ -9,6 +9,6 @@ permissions:
   contents: read
 jobs:
   check:
-    uses: paris-phan/platform/.github/workflows/ci.yml@PLATFORM_COMMIT_SHA
+    uses: GreekCore/platform/.github/workflows/ci.yml@PLATFORM_COMMIT_SHA
     with:
       platform-ref: 'PLATFORM_COMMIT_SHA'

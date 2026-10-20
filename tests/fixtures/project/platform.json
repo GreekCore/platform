@@ -2,7 +2,7 @@
   "schema_version": 1,
   "repository": "example/project",
   "platform": {
-    "repository": "paris-phan/platform",
+    "repository": "GreekCore/platform",
     "ref": "1111111111111111111111111111111111111111"
   },
   "environments": {

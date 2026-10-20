@@ -1,16 +1,17 @@
 # Platform
 
-Shared tooling and conventions for building, deploying, and operating production projects.
+GreekCore-owned release tooling for building, deploying, and operating production projects.
 
-holds all release logic (basically just github actions workflows)
+This company-maintained fork originates from the MIT-licensed `paris-phan/platform` at
+`c0e695e4f6468bca272e8c649bbbfb1d244f8329`. The original license and history are retained.
+Consumers pin a reviewed commit from `GreekCore/platform`; they do not fetch the personal
+repository. Review ownership belongs to `@GreekCore/engineering`.
 
-See scripts/ for application specific commands and workflows. i curr use
-- GCP (cloud run, container registry, )
-- infiscal for secrets management
-- render for simple container deployments
-- cloudflare workers/pages, R2
+The coordinator accepts historical repository names in project configuration so existing
+release artifacts remain eligible for recovery. Artifact hashes, source/run authorization,
+and rollback checks are unchanged; this does not authorize an arbitrary release.
 
-Pushes to `main` build and deploy staging. Production promotes the same verified artifact without rebuilding it, either by merging the promotion pull request that `promote.yml` maintains or by manual dispatch. Rollback uses a previously successful production release.
+For consuming application repositories, pushes to `main` build and deploy staging. Production promotes the same verified artifact without rebuilding it, either by merging the promotion pull request that `promote.yml` maintains or by manual dispatch. Rollback uses a previously successful production release.
 
 ## Using it
 

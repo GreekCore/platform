@@ -36,7 +36,7 @@ def load_config(path, root=None):
     require(type(c['schema_version']) is int and c['schema_version'] == 1, 'unsupported schema_version')
     require(isinstance(c['repository'], str) and REPO.fullmatch(c['repository']), 'invalid repository')
     keys(c['platform'], ('repository', 'ref'), ('repository', 'ref'), 'platform')
-    require(c['platform']['repository'] == 'paris-phan/platform', 'unsupported platform repository')
+    require(isinstance(c['platform']['repository'], str) and REPO.fullmatch(c['platform']['repository']), 'invalid platform repository')
     require(isinstance(c['platform']['ref'], str) and SHA.fullmatch(c['platform']['ref']), 'platform.ref must be a full lowercase commit SHA')
     keys(c['environments'], ('staging', 'production'), ('staging', 'production'), 'environments')
     for name, value in c['environments'].items():

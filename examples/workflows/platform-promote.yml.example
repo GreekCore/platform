@@ -11,7 +11,7 @@ permissions:
   pull-requests: write
 jobs:
   promote:
-    uses: paris-phan/platform/.github/workflows/promote.yml@PLATFORM_COMMIT_SHA
+    uses: GreekCore/platform/.github/workflows/promote.yml@PLATFORM_COMMIT_SHA
     with:
       run-id: ${{ github.event.workflow_run.id }}
       run-url: ${{ github.event.workflow_run.html_url }}

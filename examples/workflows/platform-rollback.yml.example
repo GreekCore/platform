@@ -18,7 +18,7 @@ permissions:
   id-token: write
 jobs:
   release:
-    uses: paris-phan/platform/.github/workflows/rollback.yml@PLATFORM_COMMIT_SHA
+    uses: GreekCore/platform/.github/workflows/rollback.yml@PLATFORM_COMMIT_SHA
     with:
       platform-ref: 'PLATFORM_COMMIT_SHA'
       staging-run-id: ${{ inputs.staging-run-id }}

@@ -190,6 +190,18 @@ class Lifecycle(unittest.TestCase):
         with patch('release.command', side_effect=reject_migration):
             release.rollout(self.config, self.project, self.bundle, self.sha, 'production', '42', 'rollback', 'incident')
 
+    def test_historical_platform_configuration_preserves_rollback(self):
+        self.config['platform']['repository'] = 'paris-phan/platform'
+        (self.project / 'platform.json').write_text(json.dumps(self.config))
+        self.invoke('stage')
+        staged = (self.base / 'state/staging/index.html').read_bytes()
+        os.environ['GITHUB_REF'] = 'refs/heads/production'
+        self.invoke('deploy')
+        recovered = self.base / 'recovered'
+        self.resolve(recovered, rollback=True)
+        self.invoke('deploy', recovered, '--rollback', '--reason', 'custody handover')
+        self.assertEqual((self.base / 'state/production/index.html').read_bytes(), staged)
+
     def test_duplicate_configuration_keys_fail_closed(self):
         path = self.project / 'platform.json'
         path.write_text('{"schema_version":1,"schema_version":2}')
@@ -197,7 +209,7 @@ class Lifecycle(unittest.TestCase):
             load_config(path)
 
     def test_configuration_rejects_escape_and_shared_targets(self):
-        for change in ('escape', 'shared', 'unknown', 'floating'):
+        for change in ('escape', 'shared', 'unknown', 'floating', 'repository-url', 'repository-type'):
             value = copy.deepcopy(self.config)
             if change == 'escape':
                 value['apps'][0]['path'] = 'apps/../../outside'
@@ -207,6 +219,10 @@ class Lifecycle(unittest.TestCase):
                 value['unexpected'] = True
             elif change == 'floating':
                 value['platform']['ref'] = 'main'
+            elif change == 'repository-url':
+                value['platform']['repository'] = 'https://github.com/GreekCore/platform'
+            elif change == 'repository-type':
+                value['platform']['repository'] = None
             (self.project / 'platform.json').write_text(json.dumps(value))
             with self.subTest(change=change), self.assertRaises(ValueError):
                 load_config(self.project / 'platform.json')

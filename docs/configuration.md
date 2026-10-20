@@ -8,7 +8,7 @@
 |---|---|
 | `schema_version` | Integer `1` |
 | `repository` | Exact caller `owner/repository` |
-| `platform.repository` | `paris-phan/platform` |
+| `platform.repository` | Coordinator `owner/repository`; new consumers use `GreekCore/platform`. Historical repository names remain valid for recovery of existing release artifacts. |
 | `platform.ref` | Approved full lowercase 40-character commit SHA; same pin as consumer workflows |
 | `environments` | Exactly `staging` and `production` |
 | `environments.NAME.infisical_environment` | Infisical environment slug |
